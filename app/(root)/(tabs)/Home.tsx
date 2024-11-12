@@ -2,7 +2,7 @@ import GoogleTextInput from '@/components/GoogleTextInput'
 import Map from '@/components/Map'
 import RideCard from '@/components/RideCard'
 import { SignedIn, SignedOut, useUser } from '@clerk/clerk-expo'
-import { Link } from 'expo-router'
+import { Link, router } from 'expo-router'
 import { useEffect, useState } from 'react'
 import { ActivityIndicator, FlatList, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
@@ -111,7 +111,7 @@ export default function Page() {
     const loading = false
     const {setUserLocation,setDestiantionLocation} = useLocationStore()
 
-    const [hasPermissions setHasPermissions] = useState(false)
+    const [hasPermissions, setHasPermissions] = useState(false)
 
     useEffect(() => {
         const requestLocation = async () => {
@@ -139,8 +139,14 @@ export default function Page() {
     })
 
     const handleSignOut = () => {
-    const handleDestinationPress = () => {
+    const handleDestinationPress = (location: {
+        latitude:number;
+        longitude: number;
+        address: string;
+    }) => {
+        setDestiantionLocation(location)
 
+        router.push("/(root)/find-ride")
     }
 
   return (
