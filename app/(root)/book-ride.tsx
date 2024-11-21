@@ -17,16 +17,7 @@ const BookRide = () => {
     const {userAddress, destinationAddress} = useLocationStore();
     const {drivers, selectedDriver} = useDriverStore();
 
-    const [publishableKey, setPublishableKey] = useState('');
-
-    const fetchPublishableKey = async () => {
-    //   const key = await fetchKey(); // fetch key from your server here
-    //   setPublishableKey(key);
-    };
-  
-    useEffect(() => {
-      fetchPublishableKey();
-    }, []);
+   
 
 
 
@@ -36,9 +27,9 @@ const BookRide = () => {
 
     return (
         <StripeProvider
-        publishableKey={publishableKey}
-        merchantIdentifier="merchant.identifier" // required for Apple Pay
-        urlScheme="your-url-scheme" // required for 3D Secure and bank redirects
+        publishableKey={process.env.EXPO_PUBLIC_STRIPE_PUBLISHABLE_KEY!}
+        merchantIdentifier="merchant.uber.com" // required for Apple Pay
+        urlScheme="myapp" // required for 3D Secure and bank redirects
       >
      
         <RideLayout title="Book Ride">
