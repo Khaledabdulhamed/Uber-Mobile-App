@@ -62,8 +62,6 @@ const Map = () => {
 
     useEffect(() => {
 
-        setDrivers(drivers)
-
         if(Array.isArray(drivers)){
             if(!userLatitude || !userLongitude) return;
 
@@ -76,7 +74,7 @@ const Map = () => {
         }
 
 
-    }, [drivers])
+    }, [drivers, userLatitude, userLongitude])
 
     return (
         <MapView
@@ -102,6 +100,33 @@ const Map = () => {
                     }
                     />
                 ))}
+                {destinationLongitude && destinationlatitude && (
+                    <>
+                    <Marker
+                    key="destination"
+                    coordinate={{
+                        latitude: destinationlatitude,
+                        longitude: destinationlatitude,
+                    }}
+                    title="Destination"
+                    image={icons.pin}
+                    />
+
+                    <MapViewDirections
+                    origin={{
+                        latitude: userLatitude!,
+                        longitude: userLongitude!,
+                        }}
+                        destination= {{
+                       latitude: destinationlatitude,
+                      longitude: destinationlatitude,
+                        }}
+                        apikey={process.env.EXPO_PUBLIC_GOOGLE_API_KEY}
+                        strokeColor="#0286ff"
+                        strokeWidth={3}
+                    />
+                    </>
+                )}
         </MapView>
     )
 }
